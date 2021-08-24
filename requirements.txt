@@ -1,7 +1,8 @@
-streamlit
 Pillow
+streamlit
+Keras
 cv2
 dotenv
-tensorflow
+azure
 azure.cognitiveservices.vision.face
 msrest.authentication

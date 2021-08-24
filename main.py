@@ -21,12 +21,14 @@ st.sidebar.title('さっそく顔認識をする')
 st.sidebar.write('①画像をアップロード')
 st.sidebar.write('②識別結果が右に表示されます。')
 st.sidebar.write('--------------')
-uploaded_file = st.sidebar.file_uploader("画像をアップロードしてください。", type="jpg")
+uploaded_file = st.sidebar.file_uploader("画像をアップロードしてください。", type=['jpg','jpeg', 'png'])
 
 #Face APIの各種設定
 load_dotenv('.env')
 subscription_key = os.environ.get('AZURE_KEY') # AzureのAPIキー
 endpoint = os.environ.get('AZURE_URL') # AzureのAPIエンドポイント
+
+#クライアントの認証
 face_client = FaceClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
 #メンバーリスト
@@ -36,12 +38,14 @@ members = ['上村莉菜', '尾関梨香', '小池美波', '小林由依', '齋�
             '松田里奈', '森田ひかる', '守屋麗奈', '山﨑天']
 
 
-#関数の定義
+# 各関数の定義
+# モデルを読み込む関数
 @st.cache
 def model_load():
     model = tf.keras.models.load_model('my_model.h5')
     return model
 
+# 顔の位置を囲む長方形の座標を取得する関数
 def get_rectangle(faceDictionary):
     rect = faceDictionary.face_rectangle
     left = rect.left
@@ -50,6 +54,7 @@ def get_rectangle(faceDictionary):
     bottom = top + rect.height
     return ((left, top), (right, bottom))
 
+# 画像に書き込むテキスト内容を取得する関数
 def get_draw_text(faceDictionary):
     rect = faceDictionary.face_rectangle
     text = first[0] + ' / ' + str(round(first[1]*100,1)) + '%'
@@ -58,6 +63,7 @@ def get_draw_text(faceDictionary):
     font = ImageFont.truetype('SourcehanSans-VF.ttf', font_size)
     return (text, font)
 
+# テキストを描く位置を取得する関数
 def get_text_rectangle(faceDictionary, text, font):
     rect = faceDictionary.face_rectangle
     text_width, text_height = font.getsize(text)
@@ -65,11 +71,13 @@ def get_text_rectangle(faceDictionary, text, font):
     top = rect.top - text_height - 1
     return (left, top)
 
+# 画像にテキストを描画する関数
 def draw_text(faceDictionary):
     text, font = get_draw_text(faceDictionary)
     text_rect = get_text_rectangle(faceDictionary, text, font)
     draw.text(text_rect, text, align='center', font=font, fill='red')
 
+# 顔部分だけの画像を作る関数
 def make_face_image(faceDictionary):
     rect = faceDictionary.face_rectangle
     left = rect.left
@@ -84,6 +92,7 @@ def make_face_image(faceDictionary):
     resized_image = cv2.resize(face_image_color, (128, 128))
     return resized_image
 
+# 顔画像が誰なのか予測値を上位3人まで返す関数
 def predict_name(image):
     img = image.reshape(1, 128, 128, 3)
     img = img / 255
@@ -99,11 +108,11 @@ def predict_name(image):
 if uploaded_file is not None:
     progress_message = st.empty()
     progress_message.write('顔を識別中です。お待ちください。')
+
     img = Image.open(uploaded_file)
     stream = io.BytesIO(uploaded_file.getvalue())
 
-    detected_faces = face_client.face.detect_with_stream(
-        stream)
+    detected_faces = face_client.face.detect_with_stream(stream)
     if not detected_faces:
         raise Warning('画像から顔を検出できませんでした。')
 
