@@ -7,6 +7,8 @@ from PIL import ImageFont
 import cv2
 import io
 import os
+from os.path import join, dirname
+import settings
 from dotenv import load_dotenv
 import tensorflow as tf
 from azure.cognitiveservices.vision.face import FaceClient
@@ -24,9 +26,8 @@ st.sidebar.write('--------------')
 uploaded_file = st.sidebar.file_uploader("画像をアップロードしてください。", type=['jpg','jpeg', 'png'])
 
 #Face APIの各種設定
-load_dotenv('.env')
-subscription_key = os.environ.get('AZURE_KEY') # AzureのAPIキー
-endpoint = os.environ.get('AZURE_URL') # AzureのAPIエンドポイント
+subscription_key = settings.FACE_KEY# AzureのAPIキー
+endpoint = settings.FACE_URL # AzureのAPIエンドポイント
 
 #クライアントの認証
 face_client = FaceClient(endpoint, CognitiveServicesCredentials(subscription_key))
