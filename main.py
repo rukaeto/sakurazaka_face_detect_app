@@ -63,7 +63,7 @@ def get_draw_text(faceDictionary):
     text = first[0] + ' / ' + str(round(first[1]*100,1)) + '%'
     # 枠に合わせてフォントサイズを調整
     font_size = max(30, int(rect.width / len(text)))
-    font = ImageFont.truetype('SourcehanSans-VF.ttf', font_size)
+    font = ImageFont.truetype('SourceHanSans-VF.ttf', font_size)
     return (text, font)
 
 # テキストを描く位置を取得する関数
