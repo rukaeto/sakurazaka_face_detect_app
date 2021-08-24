@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f55c2d43dd905011515f5e46ba78d180027e314ef8ccaaf53a9e88fe316767cd
-size 4463
+streamlit
+Pillow
+cv2
+dotenv
+tensorflow
+azure.cognitiveservices.vision.face
+msrest.authentication

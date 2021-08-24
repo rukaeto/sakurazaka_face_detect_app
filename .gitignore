@@ -1,3 +1,2 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:757c2dddf70af9c8234bfe04fa00243d4a3751d63d00a4facf94554d335714fc
-size 20
+*.env
+*.ttf
