@@ -43,7 +43,7 @@ members = ['上村莉菜', '尾関梨香', '小池美波', '小林由依', '齋�
 
 # 各関数の定義
 # モデルを読み込む関数
-@st.cache
+@st.cache(allow_output_mutation=True)
 def model_load():
     model = tf.keras.models.load_model('my_model.h5')
     return model
