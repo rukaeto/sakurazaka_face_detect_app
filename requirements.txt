@@ -2,4 +2,4 @@ Pillow
 streamlit
 Keras
 opencv-python
-dotenv
+python-dotenv
