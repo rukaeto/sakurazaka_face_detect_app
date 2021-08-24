@@ -3,3 +3,4 @@ streamlit
 Keras
 opencv-python-headless
 python-dotenv
+tensorflow
