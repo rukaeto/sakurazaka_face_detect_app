@@ -3,6 +3,3 @@ streamlit
 Keras
 opencv-python
 dotenv
-azure
-azure.cognitiveservices.vision.face
-msrest.authentication
