@@ -150,7 +150,7 @@ if uploaded_file is not None:
 
     img_array = np.array(img)
     st.image(img_array, use_column_width=True)
-    col1, col2 = st.beta_columns(2)
+    col1, col2 = st.columns(2)
     with col1:
         for i in range(0, len(face_img_list)):
             st.header(f'{i+1}人目:{first_name_list[i]}')
@@ -159,7 +159,7 @@ if uploaded_file is not None:
     with col2:
         st.header('分析結果詳細')
         for i in range(0, len(face_img_list)):
-            with st.beta_expander(f'{i+1}人目の詳細を表示'):
+            with st.expander(f'{i+1}人目の詳細を表示'):
                 st.write(first_name_list[i], 'の可能性:' , round(first_rate_list[i]*100,2), '%')
                 st.write(second_name_list[i], 'の可能性:' , round(second_rate_list[i]*100,2), '%')
                 st.write(third_name_list[i], 'の可能性:' , round(third_rate_list[i]*100,2), '%')
