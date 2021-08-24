@@ -1,7 +1,7 @@
 Pillow
 streamlit
 Keras
-cv2
+opencv-python
 dotenv
 azure
 azure.cognitiveservices.vision.face
